@@ -1,5 +1,5 @@
 import io
-from tkinter import Canvas
+# from tkinter import Canvas
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Sum
