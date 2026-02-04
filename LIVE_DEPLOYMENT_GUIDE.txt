@@ -1,0 +1,408 @@
+================================================================================
+        LIVE DEPLOYMENT GUIDE - E-COMMERCE PROJECT
+        Production-Ready Docker Deployment
+================================================================================
+
+TABLE OF CONTENTS:
+1. Architecture Overview
+2. Prerequisites
+3. Initial Setup
+4. Building and Starting the Website
+5. Stopping the Website
+6. Checking Logs
+7. Restarting Everything
+8. Confirming the Site is Live
+9. Common Mistakes and Fixes
+10. Important Notes
+
+================================================================================
+1. ARCHITECTURE OVERVIEW (Beginner-Friendly)
+================================================================================
+
+Your e-commerce website now runs using Docker containers. Think of containers
+as lightweight, isolated boxes that each run one part of your application.
+
+Your setup has 3 containers:
+
+┌─────────────────────────────────────────────────────────────┐
+│  CONTAINER 1: FRONTEND (Angular + Nginx)                    │
+│  - Serves your website to users                             │
+│  - Port: 80 (standard web port)                             │
+│  - Users access: http://localhost                           │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  CONTAINER 2: BACKEND (Django + Gunicorn)                   │
+│  - Handles all API requests                                 │
+│  - Processes business logic                                 │
+│  - Port: 8000 (internal only, not exposed publicly)         │
+└─────────────────────────────────────────────────────────────┘
+                            ↓
+┌─────────────────────────────────────────────────────────────┐
+│  CONTAINER 3: DATABASE (MySQL)                              │
+│  - Stores all your data                                     │
+│  - Port: 3306 (internal only, not exposed publicly)         │
+│  - Data persists even if containers restart                 │
+└─────────────────────────────────────────────────────────────┘
+
+KEY FEATURES:
+✓ Only port 80 is exposed to the internet (secure)
+✓ Database is protected inside Docker network
+✓ All data persists in Docker volumes
+✓ Containers auto-restart if they crash
+✓ Production-ready with Gunicorn and Nginx
+
+================================================================================
+2. PREREQUISITES
+================================================================================
+
+Before you start, make sure you have:
+
+□ Docker Desktop installed (Windows/Mac) or Docker Engine (Linux)
+  Download: https://www.docker.com/products/docker-desktop
+
+□ Docker Compose installed (usually comes with Docker Desktop)
+
+To verify installation, run these commands:
+  docker --version
+  docker-compose --version
+
+You should see version numbers. If not, install Docker first.
+
+================================================================================
+3. INITIAL SETUP (ONE-TIME ONLY)
+================================================================================
+
+STEP 1: Create environment file
+--------------------------------
+The .env file contains sensitive configuration like passwords and API keys.
+
+Run this command in your project root directory:
+
+  cp .env.example .env
+
+STEP 2: Edit the .env file
+---------------------------
+Open the .env file with any text editor and change these values:
+
+CRITICAL - MUST CHANGE:
+  DB_PASSWORD=SecurePassword123!
+    → Change to a strong password (mix of letters, numbers, symbols)
+
+  SECRET_KEY=change-this-to-a-random-50-character-secret-key-for-production
+    → Change to a random 50-character string
+    → You can generate one online or use: python -c "import secrets; print(secrets.token_urlsafe(50))"
+
+IMPORTANT - CHANGE FOR PRODUCTION:
+  ALLOWED_HOSTS=localhost,127.0.0.1,your-domain.com
+    → Add your actual domain name when deploying to a server
+
+  CORS_ALLOWED_ORIGINS=http://localhost
+    → Change to your actual frontend URL in production
+
+OPTIONAL - CHANGE IF USING REAL PAYMENTS:
+  RAZORPAY_KEY_ID=rzp_test_JXRn3gzDuDb3AM
+  RAZORPAY_KEY_SECRET=5VbARbWYrPrn29MGeB4Jff4r
+    → Replace with your production Razorpay keys
+
+STEP 3: Save the .env file
+---------------------------
+Save and close the file. NEVER share this file publicly!
+
+================================================================================
+4. BUILDING AND STARTING THE WEBSITE
+================================================================================
+
+FIRST TIME BUILD (or after code changes):
+------------------------------------------
+This builds the Docker images and starts all containers.
+
+Command:
+  docker-compose up --build -d
+
+Explanation:
+  - "up" = start containers
+  - "--build" = rebuild images (includes your latest code)
+  - "-d" = detached mode (runs in background)
+
+What happens:
+  1. Docker downloads base images (Python, Node, MySQL, Nginx)
+  2. Builds your backend image (installs Django, dependencies)
+  3. Builds your frontend image (compiles Angular, sets up Nginx)
+  4. Creates MySQL database
+  5. Runs database migrations
+  6. Starts all 3 containers
+
+Time: First build takes 5-10 minutes. Subsequent builds are faster.
+
+SUBSEQUENT STARTS (if already built):
+--------------------------------------
+If you've already built once and just want to start:
+
+Command:
+  docker-compose up -d
+
+This is much faster as it uses existing images.
+
+================================================================================
+5. STOPPING THE WEBSITE
+================================================================================
+
+To stop all containers (data is preserved):
+
+Command:
+  docker-compose down
+
+To stop and remove volumes (WARNING: deletes database data):
+
+Command:
+  docker-compose down -v
+
+Only use "-v" if you want to completely reset everything!
+
+================================================================================
+6. CHECKING LOGS
+================================================================================
+
+View logs from all containers:
+  docker-compose logs
+
+View logs from specific container:
+  docker-compose logs frontend
+  docker-compose logs backend
+  docker-compose logs db
+
+Follow logs in real-time (like tail -f):
+  docker-compose logs -f
+  docker-compose logs -f backend
+
+View last 100 lines:
+  docker-compose logs --tail=100
+
+Check if containers are running:
+  docker-compose ps
+
+You should see 3 containers with "Up" status.
+
+================================================================================
+7. RESTARTING EVERYTHING
+================================================================================
+
+SOFT RESTART (keeps containers, just restarts them):
+  docker-compose restart
+
+RESTART SPECIFIC SERVICE:
+  docker-compose restart backend
+  docker-compose restart frontend
+  docker-compose restart db
+
+HARD RESTART (stop, rebuild, start):
+  docker-compose down
+  docker-compose up --build -d
+
+EMERGENCY FULL RESET (deletes everything including data):
+  docker-compose down -v
+  docker volume prune -f
+  docker-compose up --build -d
+
+================================================================================
+8. CONFIRMING THE SITE IS LIVE
+================================================================================
+
+STEP 1: Check container status
+-------------------------------
+Command:
+  docker-compose ps
+
+Expected output: 3 containers with "Up" status
+
+STEP 2: Check backend health
+-----------------------------
+Open browser or use curl:
+  http://localhost/admin/
+
+You should see Django admin login page.
+
+STEP 3: Check frontend
+----------------------
+Open browser:
+  http://localhost
+
+You should see your Angular e-commerce website.
+
+STEP 4: Check API connectivity
+-------------------------------
+Try accessing an API endpoint:
+  http://localhost/api/
+
+If everything works, you're live!
+
+STEP 5: Check logs for errors
+------------------------------
+  docker-compose logs --tail=50
+
+Look for any ERROR or CRITICAL messages.
+
+================================================================================
+9. COMMON MISTAKES AND FIXES
+================================================================================
+
+PROBLEM: "docker: command not found"
+SOLUTION: Install Docker Desktop from docker.com
+
+PROBLEM: "Cannot connect to the Docker daemon"
+SOLUTION: Make sure Docker Desktop is running
+
+PROBLEM: "port is already allocated" or "address already in use"
+SOLUTION: 
+  - Another application is using port 80
+  - Stop that application or change port in docker-compose.yml
+  - Common culprits: Apache, Nginx, IIS, Skype
+  - On Windows: Stop "World Wide Web Publishing Service"
+
+PROBLEM: Frontend shows "Cannot connect to backend"
+SOLUTION:
+  - Check backend logs: docker-compose logs backend
+  - Ensure CORS_ALLOWED_ORIGINS in .env includes frontend URL
+  - Restart containers: docker-compose restart
+
+PROBLEM: "Error: database connection failed"
+SOLUTION:
+  - Wait 30 seconds for MySQL to fully initialize (first time only)
+  - Check DB_PASSWORD matches in .env file
+  - Check logs: docker-compose logs db
+
+PROBLEM: Changes to code not reflected
+SOLUTION:
+  - You must rebuild: docker-compose up --build -d
+  - Docker doesn't automatically pick up code changes
+
+PROBLEM: "Out of disk space" during build
+SOLUTION:
+  - Clean up old Docker images: docker system prune -a
+  - Free up disk space on your machine
+
+PROBLEM: Containers keep restarting
+SOLUTION:
+  - Check logs for errors: docker-compose logs -f
+  - Usually a configuration or dependency issue
+  - Check .env file for typos
+
+PROBLEM: Can't access website from other devices on network
+SOLUTION:
+  - Replace "localhost" with your machine's IP address
+  - Update ALLOWED_HOSTS in .env with your IP
+  - Rebuild: docker-compose up --build -d
+  - Check firewall settings
+
+PROBLEM: Database data disappeared after restart
+SOLUTION:
+  - Don't use "docker-compose down -v" (it deletes volumes)
+  - Volumes should persist automatically
+  - Check: docker volume ls
+
+================================================================================
+10. IMPORTANT NOTES
+================================================================================
+
+✓ NO SOURCE CODE WAS MODIFIED
+------------------------------
+This deployment setup uses ONLY new configuration files:
+  - Dockerfiles (ecommerce/Dockerfile, frontrestapi/Dockerfile)
+  - docker-compose.yml
+  - nginx.conf
+  - production_settings.py (extends existing settings.py)
+  - requirements.txt
+  - .env.example
+  - .dockerignore
+  - .gitignore
+
+Your original code in ecommerce/ and frontrestapi/ folders remains untouched.
+
+✓ SECURITY NOTES
+----------------
+1. NEVER commit .env file to Git
+2. Change default passwords before production
+3. Use strong SECRET_KEY (50+ random characters)
+4. Set DEBUG=False in production
+5. Only port 80 is exposed; database is internal-only
+6. Update ALLOWED_HOSTS with your real domain
+
+✓ PRODUCTION DEPLOYMENT
+-----------------------
+To deploy to a cloud server (AWS, DigitalOcean, etc.):
+1. Install Docker on the server
+2. Copy your project to the server
+3. Create .env file with production values
+4. Update ALLOWED_HOSTS with server IP/domain
+5. Update CORS_ALLOWED_ORIGINS with frontend URL
+6. Run: docker-compose up --build -d
+7. Set up SSL certificate (Let's Encrypt/Certbot)
+8. Point domain DNS to server IP
+
+✓ BACKUP YOUR DATA
+-------------------
+To backup database:
+  docker exec ecommerce_mysql mysqldump -u root -p$DB_PASSWORD ecommerce_db > backup.sql
+
+To restore:
+  docker exec -i ecommerce_mysql mysql -u root -p$DB_PASSWORD ecommerce_db < backup.sql
+
+✓ SCALING
+---------
+To run multiple backend workers, edit docker-compose.yml:
+  - Change "--workers 3" to higher number in backend service
+  - Or deploy multiple backend containers with a load balancer
+
+✓ MONITORING
+------------
+For production, consider adding:
+  - Container health monitoring (Portainer, Grafana)
+  - Log aggregation (ELK stack, Splunk)
+  - Performance monitoring (New Relic, Datadog)
+  - Uptime monitoring (UptimeRobot, Pingdom)
+
+✓ UPDATES AND MAINTENANCE
+--------------------------
+To update your application:
+1. Pull latest code changes
+2. Rebuild containers: docker-compose up --build -d
+3. Database migrations run automatically on startup
+
+To update Docker images:
+  docker-compose pull
+  docker-compose up --build -d
+
+================================================================================
+QUICK REFERENCE COMMANDS
+================================================================================
+
+Start website:           docker-compose up -d
+Stop website:            docker-compose down
+Restart:                 docker-compose restart
+Rebuild and start:       docker-compose up --build -d
+View logs:               docker-compose logs -f
+Check status:            docker-compose ps
+Access backend shell:    docker exec -it ecommerce_backend bash
+Access database:         docker exec -it ecommerce_mysql mysql -u root -p
+Clean everything:        docker-compose down -v && docker system prune -a
+
+================================================================================
+SUPPORT
+================================================================================
+
+If you encounter issues not covered here:
+1. Check container logs: docker-compose logs -f
+2. Verify .env configuration
+3. Ensure Docker Desktop is running
+4. Check Docker documentation: https://docs.docker.com
+5. Search Docker forums: https://forums.docker.com
+
+================================================================================
+END OF GUIDE
+================================================================================
+
+Last Updated: 2026-02-04
+Version: 1.0
+Project: E-commerce Django + Angular Application
+Deployment: Docker Compose Production Setup
