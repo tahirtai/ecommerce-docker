@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserData } from '../arrayex/arrayex.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   // standalone: true,
@@ -19,7 +20,7 @@ export class ApicallComponent {
   constructor(private httpclient: HttpClient) {}
   allUsers() 
   {
-    this.httpclient.get("http://127.0.0.1:8000/getUser/").subscribe((array: any) => {this.users = array;
+    this.httpclient.get(`${environment.apiUrl}/getUser/`).subscribe((array: any) => {this.users = array;
         console.log(this.users);
       });
   }
@@ -31,7 +32,7 @@ export class ApicallComponent {
     return;
   }
 
-  this.httpclient.get<any>(`http://127.0.0.1:8000/getUsername/${username}`)
+  this.httpclient.get<any>(`${environment.apiUrl}/getUsername/${username}`)
     .subscribe({
       next: (response) => {
         // Map JSON to class object
@@ -55,14 +56,14 @@ adduser() {
     return;
   }
 
-  this.httpclient.post("http://127.0.0.1:8000/addUser/", this.userdata)
+  this.httpclient.post(`${environment.apiUrl}/addUser/`, this.userdata)
     .subscribe(() => this.message = "User added successfully!");
 }
 
 deleteUser() {
   const username = this.userdata.username;
 
-  this.httpclient.delete(`http://127.0.0.1:8000/deleteUser/${username}`)
+  this.httpclient.delete(`${environment.apiUrl}/deleteUser/${username}`)
     .subscribe({
       next: () => this.message = "Record deleted",
       error: (err) => {
@@ -75,6 +76,6 @@ deleteUser() {
 
 updateUser()
 {
-   this.httpclient.put("http://127.0.0.1:8000/updateUser/",this.userdata).subscribe(message=>this.message="Record updated")
+   this.httpclient.put(`${environment.apiUrl}/updateUser/`,this.userdata).subscribe(message=>this.message="Record updated")
 }
 }

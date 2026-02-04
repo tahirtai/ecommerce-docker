@@ -68,7 +68,7 @@
               </button>
 
               <!-- ✅ Download Invoice Button -->
-              <a [href]="'http://127.0.0.1:8000/downloadInvoice/' + order.id"
+              <a [href]="getInvoiceUrl(order.id)"
               target="_blank"
               class="btn btn-outline-secondary btn-sm rounded-pill px-3">
               Invoice

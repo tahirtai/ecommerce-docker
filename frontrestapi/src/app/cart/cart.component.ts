@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +22,7 @@ export class CartComponent implements OnInit {
   }
 
   fetchCart() {
-    this.http.get<any[]>(`http://127.0.0.1:8000/getCart/${this.username}/`)
+    this.http.get<any[]>(`${environment.apiUrl}/getCart/${this.username}/`)
       .subscribe({
         next: (data) => {
           this.cartItems = data;
@@ -63,7 +64,7 @@ export class CartComponent implements OnInit {
       image_url: item.image_url
     };
 
-    this.http.post('http://127.0.0.1:8000/addToCart/', payload)
+    this.http.post(`${environment.apiUrl}/addToCart/`, payload)
       .subscribe({
         next: (res) => {
           console.log('Cart updated:', res);
@@ -78,7 +79,7 @@ export class CartComponent implements OnInit {
   removeFromCart(item: any) {
     if (!this.username) return;
 
-    const url = `http://127.0.0.1:8000/removeCartItem/${this.username}/${item.product_id}/`;
+    const url = `${environment.apiUrl}/removeCartItem/${this.username}/${item.product_id}/`;
 
     this.http.delete(url, {}).subscribe({
       next: (res) => {

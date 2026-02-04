@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-users',
@@ -16,7 +17,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   fetchUsers() {
-    this.http.get<any[]>('http://127.0.0.1:8000/getUser/')
+    this.http.get<any[]>(`${environment.apiUrl}/getUser/`)
       .subscribe({
         next: (data) => {
           this.users = data;
@@ -32,7 +33,7 @@ export class AdminUsersComponent implements OnInit {
       return;
     }
 
-    this.http.delete(`http://127.0.0.1:8000/deleteUser/${username}`)
+    this.http.delete(`${environment.apiUrl}/deleteUser/${username}`)
       .subscribe({
         next: (res) => {
           alert('User deleted successfully!');
@@ -52,7 +53,7 @@ export class AdminUsersComponent implements OnInit {
 
     const body = { username: username };
 
-    this.http.put(`http://127.0.0.1:8000/promoteUser/`, body)
+    this.http.put(`${environment.apiUrl}/promoteUser/`, body)
       .subscribe({
         next: (res: any) => {
           alert(res.message || 'User promoted!');

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,7 +18,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   loadDashboardSummary() {
-    this.http.get<any>('http://127.0.0.1:8000/dashboardSummary/')
+    this.http.get<any>(`${environment.apiUrl}/dashboardSummary/`)
       .subscribe({
         next: (data) => {
           this.dashboardData = data;

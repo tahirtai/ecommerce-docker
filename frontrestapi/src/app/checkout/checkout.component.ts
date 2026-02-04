@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -25,7 +26,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   fetchCart() {
-    this.http.get<any[]>(`http://127.0.0.1:8000/getCart/${this.username}/`)
+    this.http.get<any[]>(`${environment.apiUrl}/getCart/${this.username}/`)
       .subscribe({
         next: (data) => {
           this.cartItems = data;
@@ -61,7 +62,7 @@ export class CheckoutComponent implements OnInit {
         paymentMethod: 'COD'
       };
 
-      this.http.post<any>('http://127.0.0.1:8000/placeOrder/', payload)
+      this.http.post<any>(`${environment.apiUrl}/placeOrder/`, payload)
         .subscribe({
           next: (res) => {
             console.log('COD Order placed:', res);
@@ -91,7 +92,7 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    this.http.post<any>('http://127.0.0.1:8000/createRazorpayOrder/', {
+    this.http.post<any>(`${environment.apiUrl}/createRazorpayOrder/`, {
       amount: this.totalPrice,
       username: this.username,
       address: this.address,
@@ -141,7 +142,7 @@ export class CheckoutComponent implements OnInit {
       razorpay_signature: response.razorpay_signature
     };
 
-    this.http.post('http://127.0.0.1:8000/verifyPayment/', payload)
+    this.http.post(`${environment.apiUrl}/verifyPayment/`, payload)
       .subscribe({
         next: () => {
           alert('Payment verified successfully!');

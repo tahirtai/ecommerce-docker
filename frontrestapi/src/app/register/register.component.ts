@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ export class RegisterComponent {
       mobno: this.mobno
     };
 
-    this.http.post<any>('http://127.0.0.1:8000/register/', data).subscribe({
+    this.http.post<any>(`${environment.apiUrl}/register/`, data).subscribe({
       next: (response) => {
         console.log(response);
         this.successMsg = 'Registration successful! Please login.';

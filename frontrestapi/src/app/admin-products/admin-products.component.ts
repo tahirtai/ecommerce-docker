@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-products',
@@ -27,7 +28,7 @@ export class AdminProductsComponent implements OnInit {
   }
 
   fetchProducts() {
-    this.http.get<any[]>('http://127.0.0.1:8000/getAllProducts/')
+    this.http.get<any[]>(`${environment.apiUrl}/getAllProducts/`)
       .subscribe(data => {
         this.products = data;
       }, error => {
@@ -46,7 +47,7 @@ export class AdminProductsComponent implements OnInit {
   }
 
   saveUpdateProduct() {
-    this.http.put('http://127.0.0.1:8000/updateProduct/', this.editingProduct)
+    this.http.put(`${environment.apiUrl}/updateProduct/`, this.editingProduct)
       .subscribe(response => {
         console.log('Product updated:', response);
         alert('Product updated successfully!');
@@ -63,7 +64,7 @@ export class AdminProductsComponent implements OnInit {
       return;
     }
 
-    this.http.delete(`http://127.0.0.1:8000/deleteProduct/${product.product_id}`)
+    this.http.delete(`${environment.apiUrl}/deleteProduct/${product.product_id}`)
       .subscribe(response => {
         console.log('Product deleted:', response);
         alert('Product deleted successfully!');
@@ -100,7 +101,7 @@ export class AdminProductsComponent implements OnInit {
       }
     ];
 
-    this.http.post('http://127.0.0.1:8000/addProduct/', dataToSend)
+    this.http.post(`${environment.apiUrl}/addProduct/`, dataToSend)
       .subscribe(response => {
         console.log('Product added:', response);
         alert('Product added successfully!');

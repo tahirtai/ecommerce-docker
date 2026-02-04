@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChartConfiguration, ChartDataset, ChartOptions } from 'chart.js';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-reports',
@@ -56,7 +57,7 @@ export class AdminReportsComponent implements OnInit {
   }
 
   loadMonthlySales() {
-    this.http.get<any[]>('http://127.0.0.1:8000/getMonthlySalesSummary/')
+    this.http.get<any[]>(`${environment.apiUrl}/getMonthlySalesSummary/`)
       .subscribe({
         next: (data) => {
           this.monthlySalesData = data;

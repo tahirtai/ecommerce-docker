@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 // ✅ Interfaces
 interface OrderItem {
@@ -40,7 +41,7 @@ export class OrdersComponent implements OnInit {
   fetchOrders(): void {
     if (!this.username) return;
 
-    this.http.get<Order[]>(`http://127.0.0.1:8000/getOrders/${this.username}/`)
+    this.http.get<Order[]>(`${environment.apiUrl}/getOrders/${this.username}/`)
       .subscribe({
         next: (data) => {
           this.orders = data;
@@ -65,7 +66,7 @@ export class OrdersComponent implements OnInit {
       username: this.username
     };
 
-    this.http.patch(`http://127.0.0.1:8000/cancelOrder/`, payload)
+    this.http.patch(`${environment.apiUrl}/cancelOrder/`, payload)
       .subscribe({
         next: () => {
           alert('Order cancelled successfully.');
@@ -94,5 +95,10 @@ export class OrdersComponent implements OnInit {
       month: 'short',
       day: 'numeric'
     });
+  }
+
+  // Get invoice URL using environment variable
+  getInvoiceUrl(orderId: number): string {
+    return `${environment.apiUrl}/downloadInvoice/${orderId}`;
   }
 }

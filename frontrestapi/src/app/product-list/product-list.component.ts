@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +20,7 @@ export class ProductListComponent implements OnInit {
   }
 
   fetchProducts() {
-    this.http.get<any[]>('http://127.0.0.1:8000/getAllProducts/')
+    this.http.get<any[]>(`${environment.apiUrl}/getAllProducts/`)
       .subscribe({
         next: (data) => {
           this.products = data;
@@ -45,7 +46,7 @@ export class ProductListComponent implements OnInit {
       image_url: product.image_url
     };
 
-    this.http.post('http://127.0.0.1:8000/addToCart/', payload)
+    this.http.post(`${environment.apiUrl}/addToCart/`, payload)
       .subscribe({
         next: (res) => {
           console.log('Added to cart:', res);
@@ -73,7 +74,7 @@ export class ProductListComponent implements OnInit {
       image_url: product.image_url
     };
 
-    this.http.post('http://127.0.0.1:8000/addToCart/', payload)
+    this.http.post(`${environment.apiUrl}/addToCart/`, payload)
       .subscribe({
         next: (res) => {
           console.log('Added to cart for buy-now:', res);
