@@ -1,0 +1,173 @@
+<!-- ✅ HERO CAROUSEL -->
+<div id="heroCarousel" class="carousel slide hero-carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="hero-slide d-flex align-items-center justify-content-center">
+        <div class="container text-center text-lg-start">
+          <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <h1 class="hero-title">Fall 2025 Collection</h1>
+              <p class="lead mt-3 mb-1">Step into the season with style · crafted with love · inspired by you.</p>
+              <p class="text-muted fs-5">Unleash your vibe – your wardrobe, your rules.</p>
+              <a class="btn btn-dark btn-lg mt-3 shadow-sm" [routerLink]="getShopLink()">Shop Now</a>
+            </div>
+            <div class="col-lg-6 hero-img">
+              <img src="assets/images/bg.png" class="img-fluid rounded shadow" alt="Fall 2025">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <div class="hero-slide d-flex align-items-center justify-content-center">
+        <div class="container text-center text-lg-start">
+          <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <h1 class="hero-title">Fresh Gen‑Z Vibes</h1>
+              <p class="lead mt-3">Trendy silhouettes and timeless comfort designed just for you.</p>
+              <a routerLink="/products" class="btn btn-dark btn-lg mt-3 shadow-sm">Explore</a>
+            </div>
+            <div class="col-lg-6 hero-img">
+              <img src="assets/images/bg2.png" class="img-fluid rounded shadow" alt="Trendy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-item">
+      <div class="hero-slide d-flex align-items-center justify-content-center">
+        <div class="container text-center text-lg-start">
+          <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+              <h1 class="hero-title">Coming Soon: Urban Luxe Drop</h1>
+              <p class="lead mt-3">Sneak peek into our most awaited minimal, premium & street capsule of 2025.</p>
+              <a routerLink="/products" class="btn btn-outline-dark btn-lg mt-3 shadow-sm">Preview</a>
+            </div>
+            <div class="col-lg-6 hero-img">
+              <img src="assets/images/cr3.png" class="img-fluid rounded shadow" alt="Coming Soon">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- ✅ CATEGORIES -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-bold">Shop By Category</h2>
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4">
+        <div class="category-card text-center rounded overflow-hidden shadow">
+          <img src="assets/images/men.png" class="category-img" alt="Men">
+          <h5 class="fw-bold mt-3">Men</h5>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-card text-center rounded overflow-hidden shadow">
+          <img src="assets/images/women.png" class="category-img" alt="Women">
+          <h5 class="fw-bold mt-3">Women</h5>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="category-card text-center rounded overflow-hidden shadow">
+          <img src="assets/images/Access.png" class="category-img" alt="Accessories">
+          <h5 class="fw-bold mt-3">Accessories</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ BEST SELLERS -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4 fw-bold">Best Sellers</h2>
+    <div class="row g-4">
+      <div class="col-md-3" *ngFor="let product of bestSellers">
+        <div class="product-card text-center shadow-sm rounded p-3">
+          <img [src]="product.img" class="img-fluid rounded mb-3 same-height" alt="Product">
+          <h6 class="fw-bold">{{ product.name }}</h6>
+          <p class="text-muted">{{ product.price }}</p>
+          <button class="btn btn-outline-dark w-100 shadow-sm" (click)="addToCart(product)">
+            <i class="bi bi-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ TESTIMONIALS -->
+<section class="py-5">
+  <div class="container position-relative">
+    <h2 class="text-center mb-5 fw-bold">What Our Customers Say</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 rounded shadow-black text-center">
+          <p class="mb-3">"Absolutely love the vibe! The fit is perfect and quality is top-notch. Will shop again!"</p>
+          <h6 class="fw-bold mb-0">– Aarav S.</h6>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 rounded shadow-black text-center">
+          <p class="mb-3">"Got so many compliments wearing their hoodie. Gen‑Z approved for sure!"</p>
+          <h6 class="fw-bold mb-0">– Nisha K.</h6>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="testimonial-card p-4 rounded shadow-black text-center">
+          <p class="mb-3">"Fast delivery, awesome packaging, and I love my new jacket. 10/10!"</p>
+          <h6 class="fw-bold mb-0">– Rohan M.</h6>
+        </div>
+      </div>
+    </div>
+    <p class="text-muted position-absolute bottom-0 end-0 me-2 mb-1 small">+more reviews</p>
+  </div>
+</section>
+
+<!-- ✅ NEWSLETTER -->
+<section class="py-5">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-3">Stay in the Loop</h2>
+    <p class="mb-4 text-muted">Get exclusive offers, updates, and style tips in your inbox.</p>
+    <form class="d-flex justify-content-center gap-2 flex-wrap">
+      <input type="email" class="form-control w-auto shadow-sm" placeholder="Enter your email">
+      <button class="btn btn-dark shadow-sm">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<!-- ✅ FEATURES -->
+<section class="py-5">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-md-3">
+        <i class="bi bi-truck display-4 mb-3"></i>
+        <h6 class="fw-bold">Free Shipping</h6>
+      </div>
+      <div class="col-md-3">
+        <i class="bi bi-arrow-repeat display-4 mb-3"></i>
+        <h6 class="fw-bold">Easy Returns</h6>
+      </div>
+      <div class="col-md-3">
+        <i class="bi bi-headset display-4 mb-3"></i>
+        <h6 class="fw-bold">24/7 Support</h6>
+      </div>
+      <div class="col-md-3">
+        <i class="bi bi-credit-card display-4 mb-3"></i>
+        <h6 class="fw-bold">Secure Payments</h6>
+      </div>
+    </div>
+  </div>
+</section>

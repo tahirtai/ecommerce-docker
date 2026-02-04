@@ -1,0 +1,50 @@
+h2 {
+  font-family: 'Playfair Display', serif;
+  color: #000;
+}
+
+.wishlist-card {
+  transition: box-shadow 0.3s ease;
+  border-radius: 16px;
+}
+
+.wishlist-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-img-top {
+  height: 300px;
+  object-fit: cover;
+  border-radius: 16px 16px 0 0;
+}
+
+.card-body {
+  padding: 1rem 1.2rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+}
+
+.btn-dark {
+  background-color: #000;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-dark:hover {
+  background-color: #222;
+}
+
+.btn-outline-danger {
+  border: 1.5px solid #dc3545;
+  color: #dc3545;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}

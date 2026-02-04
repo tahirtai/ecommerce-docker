@@ -1,0 +1,53 @@
+<!-- Top Banner / Hero for Shop -->
+<div class="shop-hero py-5 text-center">
+  <h1 class="display-5 fw-bold mb-2">Explore Our Products</h1>
+  <p class="lead mb-4">Curated styles, Gen‑Z approved, and crafted for you.</p>
+</div>
+
+<div class="container mt-5">
+  <div class="row g-4 justify-content-center">
+    <div class="col-6 col-md-4 col-lg-3" *ngFor="let product of products">
+      <div class="product-card text-center shadow-sm rounded position-relative h-100">
+
+        <!-- Badge: New -->
+        <div class="position-absolute top-0 start-0 m-2" *ngIf="product.is_new && product.quantity > 0">
+          <span class="badge bg-success">New</span>
+        </div>
+
+        <!-- Badge: Out of Stock -->
+        <div class="position-absolute top-0 end-0 m-2" *ngIf="product.quantity == 0">
+          <span class="badge bg-secondary">Out of Stock</span>
+        </div>
+
+        <!-- Product Image -->
+        <div class="product-image-wrapper">
+          <img *ngIf="product.image_url"
+               [src]="product.image_url"
+               class="product-image img-fluid"
+               alt="Product Image">
+        </div>
+
+        <!-- Product Info -->
+        <div class="p-3">
+          <h5 class="mb-1">{{ product.product_name }}</h5>
+          <p class="mb-1 text-muted"><strong>Quantity:</strong> {{ product.quantity }}</p>
+          <p class="mb-3 fw-semibold">₹{{ product.price }}</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex gap-2 px-3 pb-3">
+          <button class="btn btn-primary flex-fill"
+                  [disabled]="product.quantity == 0"
+                  (click)="buyNow(product)">
+            {{ product.quantity == 0 ? 'Sold Out' : 'Buy Now' }}
+          </button>
+          <button class="btn btn-outline-primary flex-fill"
+                  [disabled]="product.quantity == 0"
+                  (click)="addToCart(product)">
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

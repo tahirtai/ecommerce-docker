@@ -1,0 +1,44 @@
+.container {
+  max-width: 1140px;
+}
+
+h1, h3, h4, h5 {
+  color: #222;
+}
+
+p {
+  font-size: 1rem;
+}
+
+img {
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 30px;
+  border-left: 3px solid #000;
+}
+
+.timeline-marker {
+  width: 14px;
+  height: 14px;
+  background-color: #000;
+  border-radius: 50%;
+  position: absolute;
+  left: -8px;
+  margin-top: 7px;
+}
+
+.timeline-content {
+  margin-bottom: 30px;
+}
+
+/* Counter */
+.counter {
+  color: #000;
+  transition: all 0.5s ease;
+}

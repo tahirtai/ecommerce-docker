@@ -1,0 +1,107 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Admin Dashboard</h2>
+
+  <!-- Dashboard Summary Cards -->
+  <div class="row g-4 mb-5">
+
+    <!-- Total Orders -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow h-100 border-0 bg-light">
+        <div class="card-body">
+          <i class="bi bi-receipt fs-2 text-success mb-2"></i>
+          <h5 class="card-title">Total Orders</h5>
+          <h3>{{ dashboardData?.total_orders }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Users -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow h-100 border-0 bg-light">
+        <div class="card-body">
+          <i class="bi bi-people fs-2 text-primary mb-2"></i>
+          <h5 class="card-title">Total Users</h5>
+          <h3>{{ dashboardData?.total_users }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Sales -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow h-100 border-0 bg-light">
+        <div class="card-body">
+          <i class="bi bi-currency-rupee fs-2 text-danger mb-2"></i>
+          <h5 class="card-title">Total Sales</h5>
+          <h3>₹{{ dashboardData?.total_sales }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Orders -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow h-100 border-0 bg-light">
+        <div class="card-body">
+          <i class="bi bi-hourglass-split fs-2 text-warning mb-2"></i>
+          <h5 class="card-title">Pending Orders</h5>
+          <h3>{{ dashboardData?.pending_orders }}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Quick Links to Manage Pages -->
+  <h4 class="mb-3">Quick Links</h4>
+
+  <div class="row g-4">
+
+    <!-- Manage Products -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow-sm h-100 hover-shadow">
+        <div class="card-body">
+          <i class="bi bi-box-seam fs-3 text-primary mb-2"></i>
+          <h5 class="card-title">Manage Products</h5>
+          <p class="card-text">Add, update, or delete products</p>
+          <a routerLink="/admin-products" class="btn btn-primary w-100">Go</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manage Orders -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow-sm h-100 hover-shadow">
+        <div class="card-body">
+          <i class="bi bi-receipt fs-3 text-success mb-2"></i>
+          <h5 class="card-title">Manage Orders</h5>
+          <p class="card-text">View and handle orders</p>
+          <a routerLink="/admin-orders" class="btn btn-primary w-100">Go</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manage Users -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow-sm h-100 hover-shadow">
+        <div class="card-body">
+          <i class="bi bi-people fs-3 text-info mb-2"></i>
+          <h5 class="card-title">Manage Users</h5>
+          <p class="card-text">View registered users</p>
+          <a routerLink="/admin-users" class="btn btn-primary w-100">Go</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports -->
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="card text-center shadow-sm h-100 hover-shadow">
+        <div class="card-body">
+          <i class="bi bi-bar-chart-line fs-3 text-warning mb-2"></i>
+          <h5 class="card-title">Reports</h5>
+          <p class="card-text">View sales reports</p>
+          <a routerLink="/admin-reports" class="btn btn-primary w-100">Go</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

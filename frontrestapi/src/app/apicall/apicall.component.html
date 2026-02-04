@@ -1,0 +1,39 @@
+<h2>🔍 User API Interaction</h2>
+
+<form style="max-width: 400px;">
+  <label for="username"><strong>Username:</strong></label><br>
+  <input type="text" id="username" name="username" [(ngModel)]="userdata.username" class="form-control" placeholder="Enter Username"><br>
+
+  <label for="password"><strong>Password:</strong></label><br>
+  <input type="text" id="password" name="password" [(ngModel)]="userdata.password" class="form-control" placeholder="Enter Password"><br>
+
+  <label for="mobno"><strong>Mobile Number:</strong></label><br>
+  <input type="text" id="mobno" name="mobno" [(ngModel)]="userdata.mobno" class="form-control" placeholder="Enter Mobile Number"><br>
+
+  <input type="button" value="Get All Users" (click)="allUsers()" class="btn btn-primary">
+  <input type="button" value="Get User by Name" (click)="getUserByName()" class="btn btn-secondary"><br><br>
+  <input type="button" value="Add User" (click)="adduser()" class="btn btn-success">
+  <input type="button" value="Delete User" (click)="deleteUser()" class="btn btn-danger"><br><br>
+  <input type="button" value="Update User" (click)="updateUser()" class="btn btn-warning"><br><br>
+  <p style="color: green;">{{ message }}</p>
+</form>
+
+<hr>
+
+<h3>📜 All Users</h3>
+<table border="1" cellpadding="10" *ngIf="users.length > 0">
+  <thead style="background-color: #f0f0f0;">
+    <tr>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Mobile No</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.username }}</td>
+      <td>{{ user.password }}</td>
+      <td>{{ user.mobno }}</td>
+    </tr>
+  </tbody>
+</table>

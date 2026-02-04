@@ -1,0 +1,32 @@
+<div class="container my-5">
+  <h2 class="mb-4 text-center fw-bold">Your Wishlist</h2>
+
+  <!-- Empty State -->
+  <div *ngIf="wishlistItems.length === 0" class="text-center text-muted py-5">
+    <p class="lead">Your wishlist is empty.</p>
+    <a routerLink="/shop" class="btn btn-dark rounded-pill px-4 py-2 mt-3">
+      Start Shopping
+    </a>
+  </div>
+
+  <!-- Wishlist Cards -->
+  <div class="row g-4" *ngIf="wishlistItems.length > 0">
+    <div class="col-md-4" *ngFor="let item of wishlistItems">
+      <div class="card border-0 shadow-sm h-100 wishlist-card">
+        <img [src]="item.image" class="card-img-top rounded-top" alt="Product Image">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-1">{{ item.name }}</h5>
+          <p class="text-muted mb-2">₹{{ item.price }}</p>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-dark btn-sm rounded-pill px-3" (click)="addToCart(item)">
+              Add to Cart
+            </button>
+            <button class="btn btn-outline-danger btn-sm rounded-pill px-3" (click)="removeFromWishlist(item)">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

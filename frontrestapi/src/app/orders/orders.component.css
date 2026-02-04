@@ -1,0 +1,84 @@
+/* ===== Hero Section ===== */
+.orders-hero {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+.orders-hero h1 {
+  color: #212529;
+}
+.orders-hero p {
+  color: #555;
+}
+
+/* ===== Table Styling ===== */
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.table thead {
+  background-color: #000;
+  color: #fff;
+}
+.table th, .table td {
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.95rem;
+}
+.table-light {
+  background-color: #f8f9fa !important;
+}
+
+/* ===== Badges ===== */
+.badge {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.btn-outline-primary {
+  border: 2px solid #000;
+  color: #000;
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.btn-outline-primary:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.btn-danger.btn-sm {
+  border-radius: 50px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.btn-danger.btn-sm:hover {
+  background-color: #c82333;
+  color: #fff;
+}
+
+/* ===== Alerts ===== */
+.alert-info {
+  font-size: 1rem;
+  border-radius: 12px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .table th, .table td {
+    font-size: 0.85rem;
+  }
+}

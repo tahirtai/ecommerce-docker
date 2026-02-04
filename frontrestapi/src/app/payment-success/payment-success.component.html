@@ -1,0 +1,39 @@
+<div class="payment-hero py-5 text-center" *ngIf="orderDetails">
+  <h1 class="display-5 fw-bold text-success mb-3">Payment Successful!</h1>
+  <p class="lead mb-4">Thanks for your order, your style is on the way! 🎉</p>
+
+  <div class="container">
+    <div class="card shadow p-4 rounded-4 mx-auto" style="max-width: 700px;">
+      <h3 class="fw-bold mb-3">Order Summary</h3>
+
+      <div class="mb-2"><strong>Order ID:</strong> {{ orderDetails.order_id }}</div>
+      <div class="mb-2"><strong>Status:</strong> {{ orderDetails.status }}</div>
+      <div class="mb-2"><strong>Payment:</strong> {{ orderDetails.payment_status }}</div>
+      <div class="mb-2"><strong>Amount Paid:</strong> ₹{{ orderDetails.amount }}</div>
+      <hr>
+
+      <div *ngFor="let item of orderDetails.items" class="d-flex align-items-center mb-3">
+        <img [src]="item.image_url" alt="Product Image"
+             class="img-thumbnail me-3 rounded" style="width: 80px; height: 80px;">
+        <div class="flex-grow-1">
+          <div class="fw-semibold">{{ item.product_name }}</div>
+          <div>₹{{ item.price }} × {{ item.quantity }} = ₹{{ item.subtotal }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
+      <a routerLink="/products" class="btn btn-primary px-4 py-2 rounded-pill">
+        Continue Shopping
+      </a>
+      <a routerLink="/my-orders" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+        View My Orders
+      </a>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!orderDetails" class="text-center mt-5">
+  <p class="lead">Loading your order details...</p>
+</div>

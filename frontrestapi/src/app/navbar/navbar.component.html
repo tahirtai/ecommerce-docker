@@ -1,0 +1,69 @@
+<!-- Top info bar -->
+<div class="top-bar py-1">
+  <div class="container d-flex justify-content-between align-items-center">
+    <small class="text-light"> Free shipping · 30‑day return · 24/7 support</small>
+    <div class="social-icons d-flex gap-3">
+      <a href="https://www.instagram.com/buyblox4u/" target="_blank"><i class="bi bi-instagram"></i></a>
+      <a href="https://www.instagram.com/buyblox4u/" target="_blank"><i class="bi bi-facebook"></i></a>
+      <a href="https://www.snapchat.com/add/xyronxo0?share_id=flecZ9876Q8&locale=en-US" target="_blank"><i class="bi bi-twitter-x"></i></a>
+      <a href="https://www.snapchat.com/add/xyronxo0?share_id=flecZ9876Q8&locale=en-US" target="_blank"><i class="bi bi-snapchat"></i></a>
+    </div>
+  </div>
+</div>
+
+<!-- Main navbar -->
+<nav class="navbar navbar-expand-lg main-navbar shadow-sm">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand logo-text fw-bold" routerLink="/">
+      <span class="luxury-logo">BuyBlox</span><span class="dot">•</span>
+    </a>
+
+    <!-- Toggle -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav mb-2 mb-lg-0 gap-4">
+        <li class="nav-item"><a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/products" routerLinkActive="active">Shop</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/about" routerLinkActive="active">About</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Right side -->
+    <div class="d-flex align-items-center gap-3">
+  
+  <!-- Search Icon -->
+  <button class="btn btn-outline-secondary" routerLink="/search">
+    <i class="bi bi-search"></i>
+  </button>
+      <!-- Wishlist button -->
+      <button class="btn btn-outline-secondary position-relative" routerLink="/wishlist">
+        <i class="bi bi-heart-fill"></i>
+      </button>
+
+      <!-- Cart -->
+      <button class="btn btn-outline-dark position-relative" routerLink="/cart">
+        <i class="bi bi-bag-fill"></i>
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          *ngIf="isLoggedIn()"></span>
+      </button>
+
+      <a *ngIf="!isLoggedIn()" routerLink="/login" class="btn btn-outline-primary">
+        <i class="bi bi-person-circle"></i> Login
+      </a>
+      <button *ngIf="isLoggedIn()" (click)="logout()" class="btn btn-outline-danger">
+        <i class="bi bi-box-arrow-right"></i> Logout ({{ getUsername() }})
+      </button>
+    </div>
+  </div>
+</nav>

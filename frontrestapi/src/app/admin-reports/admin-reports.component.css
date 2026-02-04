@@ -1,0 +1,26 @@
+h2 {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.card {
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.table th {
+  font-size: 15px;
+}
+
+.table td {
+  font-size: 14px;
+}
+
+canvas {
+  max-height: 300px;
+}

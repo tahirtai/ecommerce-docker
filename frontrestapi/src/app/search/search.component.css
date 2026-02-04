@@ -1,0 +1,36 @@
+.card-img-top {
+  height: 280px;
+  object-fit: cover;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+}
+
+.product-card {
+  border-radius: 1.5rem;
+  border: none;
+  overflow: hidden;
+  transition: 0.3s ease;
+  background: #fff;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.discount-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: #dc3545;
+  color: white;
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-weight: 500;
+}
+
+.rating i {
+  font-size: 1rem;
+  margin-right: 2px;
+}

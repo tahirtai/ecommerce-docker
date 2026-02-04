@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Manage Users</h2>
+
+  <!-- Users Table -->
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Username</th>
+        <th>Mobile No</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.username }}</td>
+        <td>{{ user.mobno }}</td>
+        <td>
+          <span class="badge" 
+                [class.bg-primary]="user.role === 'user'"
+                [class.bg-success]="user.role === 'admin'">
+            {{ user.role }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm me-2" (click)="deleteUser(user.username)">
+            Delete
+          </button>
+
+          <button class="btn btn-warning btn-sm" 
+                  [disabled]="user.role === 'admin'"
+                  (click)="promoteUser(user.username)">
+            Promote to Admin
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

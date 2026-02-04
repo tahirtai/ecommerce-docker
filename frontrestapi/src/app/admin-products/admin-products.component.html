@@ -1,0 +1,125 @@
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">Manage Products</h2>
+
+  <!-- Add Product Button -->
+  <div class="text-end mb-3">
+    <button class="btn btn-success" (click)="openAddModal()">
+      + Add Product
+    </button>
+  </div>
+
+  <!-- Product List -->
+  <div class="row justify-content-center">
+    <div class="col-sm-6 col-md-4 col-lg-4 mb-4" *ngFor="let product of products">
+      <div class="card h-100 shadow-sm position-relative">
+
+        <!-- Badge: New -->
+        <div class="position-absolute top-0 start-0 m-2" *ngIf="product.is_new && product.quantity > 0">
+          <span class="badge bg-success">New</span>
+        </div>
+
+        <!-- Badge: Out of Stock -->
+        <div class="position-absolute top-0 end-0 m-2" *ngIf="product.quantity == 0">
+          <span class="badge bg-secondary">Out of Stock</span>
+        </div>
+
+        <!-- Card Image -->
+        <img *ngIf="product.image_url" [src]="product.image_url" class="card-img-top img-zoom-hover" alt="Product Image">
+
+        <!-- Card Body -->
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ product.product_name }}</h5>
+          <p class="card-text mb-2"><strong>Quantity:</strong> {{ product.quantity }}</p>
+          <p class="card-text mb-3"><strong>Price:</strong> ₹{{ product.price }}</p>
+        </div>
+
+        <!-- Card Footer (Admin Actions) -->
+        <div class="card-footer bg-white border-0 d-flex justify-content-between gap-2">
+          <button class="btn btn-warning flex-fill" (click)="openUpdateModal(product)">Update</button>
+          <button class="btn btn-danger flex-fill" (click)="deleteProduct(product)">Delete</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="modal fade show" id="addProductModal" tabindex="-1" [class.d-block]="showAddModal" [style.backgroundColor]="'rgba(0,0,0,0.5)'" *ngIf="showAddModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Product</h5>
+        <button type="button" class="btn-close" (click)="closeAddModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Product ID</label>
+          <input type="number" class="form-control" [(ngModel)]="newProduct.product_id">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Product Name</label>
+          <input type="text" class="form-control" [(ngModel)]="newProduct.product_name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Quantity</label>
+          <input type="number" class="form-control" [(ngModel)]="newProduct.quantity">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Price</label>
+          <input type="number" class="form-control" [(ngModel)]="newProduct.price">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Image URL</label>
+          <input type="text" class="form-control" [(ngModel)]="newProduct.image_url">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeAddModal()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="saveNewProduct()">Add</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- UPDATE PRODUCT MODAL -->
+<div class="modal fade show" id="updateProductModal" tabindex="-1" [class.d-block]="showUpdateModal" [style.backgroundColor]="'rgba(0,0,0,0.5)'" *ngIf="showUpdateModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Update Product</h5>
+        <button type="button" class="btn-close" (click)="closeUpdateModal()"></button>
+      </div>
+
+      <div class="modal-body" *ngIf="editingProduct">
+        <div class="mb-3">
+          <label class="form-label">Product Name</label>
+          <input type="text" class="form-control" [(ngModel)]="editingProduct.product_name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Quantity</label>
+          <input type="number" class="form-control" [(ngModel)]="editingProduct.quantity">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Price</label>
+          <input type="number" class="form-control" [(ngModel)]="editingProduct.price">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Image URL</label>
+          <input type="text" class="form-control" [(ngModel)]="editingProduct.image_url">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeUpdateModal()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="saveUpdateProduct()">Save</button>
+      </div>
+
+    </div>
+  </div>
+</div>

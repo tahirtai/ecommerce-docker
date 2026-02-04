@@ -1,0 +1,99 @@
+<!-- Hero Section -->
+<div class="cart-hero py-5 text-center">
+  <h1 class="display-5 fw-bold mb-2">Your Cart</h1>
+  <p class="lead mb-4">Review your picks and get ready to checkout in style.</p>
+</div>
+
+<div class="container mt-5">
+  <div *ngIf="cartItems.length === 0" class="alert alert-info text-center">
+    Your cart is empty.
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="row">
+    <div class="col-12">
+
+      <!-- Cart Table -->
+      <div class="table-responsive shadow-sm rounded overflow-hidden">
+        <table class="table align-middle mb-0">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Image</th>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Subtotal</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <td>
+                <img [src]="item.image_url" alt="Product" class="cart-img-thumb">
+              </td>
+              <td class="fw-semibold">{{ item.product_name }}</td>
+              <td>₹{{ item.price }}</td>
+              <td>
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                  <button class="btn btn-sm btn-outline-dark"
+                          (click)="decreaseQuantity(item)"
+                          [disabled]="item.quantity === 1">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button class="btn btn-sm btn-outline-dark"
+                          (click)="increaseQuantity(item)"
+                          [disabled]="item.quantity >= item.max_stock">+</button>
+                </div>
+              </td>
+              <td class="fw-semibold">₹{{ item.price * item.quantity }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm rounded-pill" (click)="removeFromCart(item)">
+                  <i class="bi bi-trash"></i> Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Cart Summary -->
+      <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-3">
+        <h4 class="mb-0">Total: ₹{{ totalPrice }}</h4>
+
+        <div class="d-flex gap-2 flex-wrap">
+          <!-- Continue Shopping -->
+          <a routerLink="/products" class="btn btn-outline-primary px-4 py-2 rounded-pill">
+            Continue Shopping
+          </a>
+
+          <!-- Proceed to Checkout -->
+          <a routerLink="/checkout" class="btn btn-primary px-4 py-2 rounded-pill">
+            Proceed to Checkout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Static Recommendation Section -->
+<div class="container my-5">
+  <h3 class="text-center fw-bold mb-4">You May Also Like</h3>
+  <div class="row g-4 justify-content-center">
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="product-card text-center shadow-sm rounded p-2">
+        <img src="assets/images/streetee.png" class="product-image" alt="Sample Product">
+        <h5 class="mt-3 mb-1">Street Style Tee</h5>
+        <p class="mb-1 text-muted">₹999</p>
+        <a routerLink="/products" class="btn btn-outline-primary w-100">View Product</a>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="product-card text-center shadow-sm rounded p-2">
+        <img src="assets/images/kh.png" class="product-image" alt="Sample Product">
+        <h5 class="mt-3 mb-1">Korean Hoodie</h5>
+        <p class="mb-1 text-muted">₹1499</p>
+        <a routerLink="/products" class="btn btn-outline-primary w-100">View Product</a>
+      </div>
+    </div>
+  </div>
+</div>
+

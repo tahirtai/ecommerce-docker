@@ -1,0 +1,89 @@
+<div class="orders-hero py-5 text-center">
+  <h1 class="display-5 fw-bold mb-2">My Orders</h1>
+  <p class="lead mb-0">Track your purchases and history in one place.</p>
+</div>
+
+<div class="container mt-5">
+  <div *ngIf="orders.length === 0" class="alert alert-info text-center p-4 rounded shadow-sm">
+    You have no orders yet.
+    <br>
+    <a routerLink="/products" class="btn btn-primary mt-3 rounded-pill px-4 py-2">
+      Shop Now
+    </a>
+  </div>
+
+  <div *ngIf="orders.length > 0" class="table-responsive">
+    <table class="table align-middle shadow-sm rounded overflow-hidden">
+      <thead class="table-dark">
+        <tr>
+          <th>Date</th>
+          <th>Image</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Subtotal</th>
+          <th>Status</th>
+          <th>Payment</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let order of orders">
+          <tr *ngFor="let item of order.items; let i = index">
+            <td *ngIf="i === 0" [attr.rowspan]="order.items.length" class="fw-semibold">
+              {{ order.order_date | date:'shortDate' }}<br>
+              <!-- ✅ ETA Display -->
+              <small class="text-muted fst-italic">ETA: {{ getETA(order.order_date) }}</small>
+            </td>
+            <td>
+              <img [src]="item.image_url" class="img-thumbnail rounded" style="max-width: 70px;">
+            </td>
+            <td class="fw-medium">{{ item.product_name }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.subtotal }}</td>
+
+            <td *ngIf="i === 0" [attr.rowspan]="order.items.length">
+              <span class="badge rounded-pill px-3 py-2"
+                    [ngClass]="{
+                      'bg-warning text-dark': order.status === 'Pending',
+                      'bg-success': order.status === 'Completed',
+                      'bg-secondary': order.status === 'Cancelled'
+                    }">
+                {{ order.status }}
+              </span>
+            </td>
+
+            <td *ngIf="i === 0" [attr.rowspan]="order.items.length">
+              <span class="badge bg-info text-dark px-3 py-2 rounded-pill">
+                {{ order.payment_status || 'Pending' }}
+              </span>
+            </td>
+
+            <td *ngIf="i === 0" [attr.rowspan]="order.items.length" class="text-nowrap">
+              <button *ngIf="order.status === 'Pending'"
+                      class="btn btn-danger btn-sm rounded-pill px-3 me-2"
+                      (click)="cancelOrder(order.id)">
+                Cancel
+              </button>
+
+              <!-- ✅ Download Invoice Button -->
+              <a [href]="'http://127.0.0.1:8000/downloadInvoice/' + order.id"
+              target="_blank"
+              class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+              Invoice
+            </a>
+            </td>
+          </tr>
+
+          <!-- ✅ Order Total Row (No logic changed) -->
+          <tr class="table-light fw-bold">
+            <td colspan="9" class="text-end">
+              Total: ₹{{ getOrderTotal(order) }}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

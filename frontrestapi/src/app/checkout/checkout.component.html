@@ -1,0 +1,64 @@
+<!-- Hero Section -->
+<div class="checkout-hero py-5 text-center">
+  <h1 class="display-5 fw-bold mb-2">Checkout</h1>
+  <p class="lead mb-4">Complete your order and get ready for style!</p>
+</div>
+
+<div class="container mt-5">
+  <!-- Empty Cart Message -->
+  <div *ngIf="cartItems.length === 0" class="alert alert-info text-center p-4 rounded shadow-sm">
+    Your cart is empty. <br>
+    <a routerLink="/products" class="btn btn-primary mt-3 px-4 py-2 rounded-pill">
+      Continue Shopping
+    </a>
+  </div>
+
+  <!-- Checkout Form -->
+  <div *ngIf="cartItems.length > 0" class="row g-4">
+    <!-- Left: Delivery & Payment -->
+    <div class="col-md-8">
+      <div class="p-4 shadow-sm rounded bg-white mb-4">
+        <h4 class="fw-bold mb-3">Delivery Address</h4>
+        <textarea class="form-control mb-3 rounded" [(ngModel)]="address"
+                  rows="4" placeholder="Enter full delivery address..."></textarea>
+      </div>
+
+      <div class="p-4 shadow-sm rounded bg-white mb-4">
+        <h4 class="fw-bold mb-3">Payment Method</h4>
+        <select class="form-select mb-4 rounded" [(ngModel)]="paymentMethod">
+          <option value="COD">Cash on Delivery (COD)</option>
+          <option value="Online">Online Payment (Razorpay)</option>
+        </select>
+
+        <button class="btn btn-primary btn-lg w-100 rounded-pill"
+          (click)="placeOrder()">
+          Place Order
+        </button>
+      </div>
+    </div>
+
+    <!-- Right: Order Summary -->
+    <div class="col-md-4">
+      <div class="p-4 shadow-sm rounded bg-white">
+        <h4 class="fw-bold mb-3">Order Summary</h4>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of cartItems">
+            <div>
+              {{ item.product_name }} <br>
+              <small class="text-muted">x {{ item.quantity }}</small>
+            </div>
+            <div class="fw-semibold">₹{{ item.price * item.quantity }}</div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <strong>Total:</strong>
+            <strong>₹{{ totalPrice }}</strong>
+          </li>
+        </ul>
+
+        <a routerLink="/cart" class="btn btn-outline-primary w-100 rounded-pill">
+          ← Back to Cart
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
