@@ -35,8 +35,11 @@ COPY --from=frontend-builder /frontend/dist/frontrestapi /usr/share/nginx/html
 COPY frontrestapi/nginx.conf /etc/nginx/conf.d/default.conf
 
 # collect static
-RUN python manage.py collectstatic --noinput
+# RUN python manage.py collectstatic --noinput
 
 EXPOSE 80
 
-CMD service nginx start && gunicorn ecommerce.wsgi:application --bind 0.0.0.0:8000
+CMD python manage.py collectstatic --noinput && \
+    service nginx start && \
+    gunicorn ecommerce.wsgi:application --bind 0.0.0.0:8000
+
