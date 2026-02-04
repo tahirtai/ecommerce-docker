@@ -39,8 +39,8 @@ COPY frontrestapi/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
-CMD python manage.py collectstatic --noinput || true && \
-    service nginx start && \
+CMD service nginx start && \
     gunicorn ecommerce.wsgi:application --bind 0.0.0.0:8000
+
 
 
