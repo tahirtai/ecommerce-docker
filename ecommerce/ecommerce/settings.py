@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-)z_nuy3$vmvo867y_(vc+=kheus072_x(j$rwws988tf8fvn3!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "ecommerce-docker-laly.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
