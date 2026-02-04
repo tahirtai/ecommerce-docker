@@ -1,22 +1,18 @@
-"""
-Production settings override for Django ecommerce project.
-This file extends settings.py with production-specific configurations.
-Import this by setting DJANGO_SETTINGS_MODULE=ecommerce.production_settings
-"""
-
 import os
+from pathlib import Path
 from .settings import *
 
-# Override DEBUG setting from environment
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Security settings for production
 SECRET_KEY = os.environ.get('SECRET_KEY', SECRET_KEY)
 
-# Allowed hosts from environment
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1'
+).split(',')
 
-# Database configuration from environment
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -28,16 +24,17 @@ DATABASES = {
     }
 }
 
-# CORS settings for production
 CORS_ALLOWED_ORIGINS = os.environ.get(
-    'CORS_ALLOWED_ORIGINS', 
+    'CORS_ALLOWED_ORIGINS',
     'http://localhost'
 ).split(',')
 
-# Static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# Static files (production)
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
-# Razorpay settings from environment (fallback to existing if not set)
 RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID', RAZORPAY_KEY_ID)
 RAZORPAY_KEY_SECRET = os.environ.get('RAZORPAY_KEY_SECRET', RAZORPAY_KEY_SECRET)
